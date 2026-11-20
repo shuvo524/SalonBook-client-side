@@ -77,7 +77,7 @@ export default function Footer() {
             <p>
               <a
                 href="mailto:hello@salonbook.example"
-                className="transition-colors hover:text-rose-300"
+                className="break-all transition-colors hover:text-rose-300"
               >
                 hello@salonbook.example
               </a>

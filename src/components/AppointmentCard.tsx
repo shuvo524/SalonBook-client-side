@@ -49,7 +49,7 @@ export default function AppointmentCard({
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-start justify-between gap-2">
             <div>
-              <h3 className="font-display text-lg font-semibold text-stone-900">
+              <h3 className="font-display text-lg font-semibold break-words text-stone-900">
                 {service.serviceName}
               </h3>
               <p className="text-xs font-medium tracking-wide text-stone-500 uppercase">
@@ -62,7 +62,9 @@ export default function AppointmentCard({
             </div>
           </div>
 
-          <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-1.5 text-sm sm:grid-cols-4">
+          {/* One column on phones so dates never wrap mid-value; 2 columns
+              from 420px up, 4 on tablets and desktop. */}
+          <dl className="mt-3 grid grid-cols-1 gap-x-4 gap-y-1.5 text-sm min-[420px]:grid-cols-2 sm:grid-cols-4">
             <div>
               <dt className="text-xs text-stone-400">Date</dt>
               <dd className="font-medium text-stone-800">
@@ -90,11 +92,11 @@ export default function AppointmentCard({
           </dl>
 
           {showCustomer && (
-            <p className="mt-3 text-sm text-stone-600">
+            <p className="mt-3 text-sm break-words text-stone-600">
               <span className="font-medium text-stone-800">Customer:</span>{" "}
               {customerDisplayName(appointment.customerId)}
               {customerDisplayEmail(appointment.customerId) && (
-                <span className="text-stone-500">
+                <span className="break-all text-stone-500">
                   {" "}
                   ({customerDisplayEmail(appointment.customerId)})
                 </span>
@@ -103,7 +105,7 @@ export default function AppointmentCard({
           )}
 
           {appointment.message && (
-            <p className="mt-3 rounded-lg bg-stone-50 px-3 py-2 text-sm text-stone-600">
+            <p className="mt-3 rounded-lg bg-stone-50 px-3 py-2 text-sm break-words text-stone-600">
               <span className="font-medium text-stone-800">Message:</span>{" "}
               {appointment.message}
             </p>

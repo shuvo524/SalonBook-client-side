@@ -138,18 +138,18 @@ export default function ProfilePage() {
             <img
               src={shownImage}
               alt={user.name}
-              className="h-20 w-20 rounded-full object-cover"
+              className="h-20 w-20 shrink-0 rounded-full object-cover"
             />
           ) : (
-            <span className="flex h-20 w-20 items-center justify-center rounded-full bg-rose-600 text-3xl font-bold text-white">
+            <span className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-rose-600 text-3xl font-bold text-white">
               {initial}
             </span>
           )}
-          <div>
-            <p className="font-display text-xl font-semibold text-stone-900">
+          <div className="min-w-0 flex-1">
+            <p className="font-display text-xl font-semibold break-words text-stone-900">
               {user.name}
             </p>
-            <p className="text-sm text-stone-500">{user.email}</p>
+            <p className="text-sm break-all text-stone-500">{user.email}</p>
             <span className="mt-1 inline-block rounded-full bg-rose-50 px-2.5 py-0.5 text-xs font-semibold text-rose-700 capitalize">
               {user.role}
             </span>

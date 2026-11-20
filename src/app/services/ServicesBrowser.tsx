@@ -105,9 +105,10 @@ export default function ServicesBrowser() {
           : `${total} service${total === 1 ? "" : "s"} available`}
       </p>
 
-      {/* Search, filter & sort */}
-      <div className="mt-8 grid gap-3 rounded-2xl border border-stone-200 bg-white p-4 shadow-sm sm:grid-cols-[1fr_220px_220px] sm:p-5">
-        <label className="block">
+      {/* Search, filter & sort: stacked on phones, search full-width with
+          the two selects side by side on tablets, three columns on desktop. */}
+      <div className="mt-8 grid gap-3 rounded-2xl border border-stone-200 bg-white p-4 shadow-sm sm:grid-cols-2 sm:p-5 lg:grid-cols-[1fr_220px_220px]">
+        <label className="block sm:col-span-2 lg:col-span-1">
           <span className="sr-only">Search services by name</span>
           <input
             type="search"

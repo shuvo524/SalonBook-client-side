@@ -323,14 +323,14 @@ function ManageAppointmentsContent() {
       </p>
 
       <div className="mt-6 flex flex-wrap gap-3">
-        <label className="block">
+        <label className="block w-full sm:w-auto">
           <span className="sr-only">Filter by status</span>
           <select
             value={statusFilter}
             onChange={(event) =>
               setStatusFilter(event.target.value as StatusFilter)
             }
-            className="rounded-lg border border-stone-300 bg-white px-3.5 py-2.5 text-sm text-stone-700 outline-none focus:border-rose-500 focus:ring-2 focus:ring-rose-100"
+            className="w-full rounded-lg border border-stone-300 bg-white px-3.5 py-2.5 text-sm text-stone-700 outline-none focus:border-rose-500 focus:ring-2 focus:ring-rose-100 sm:w-auto"
           >
             {STATUS_FILTERS.map((item) => (
               <option key={item.value} value={item.value}>
@@ -339,14 +339,14 @@ function ManageAppointmentsContent() {
             ))}
           </select>
         </label>
-        <label className="block">
+        <label className="block w-full sm:w-auto">
           <span className="sr-only">Filter by payment status</span>
           <select
             value={paymentFilter}
             onChange={(event) =>
               setPaymentFilter(event.target.value as PaymentFilter)
             }
-            className="rounded-lg border border-stone-300 bg-white px-3.5 py-2.5 text-sm text-stone-700 outline-none focus:border-rose-500 focus:ring-2 focus:ring-rose-100"
+            className="w-full rounded-lg border border-stone-300 bg-white px-3.5 py-2.5 text-sm text-stone-700 outline-none focus:border-rose-500 focus:ring-2 focus:ring-rose-100 sm:w-auto"
           >
             {PAYMENT_FILTERS.map((item) => (
               <option key={item.value} value={item.value}>

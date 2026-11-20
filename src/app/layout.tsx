@@ -77,6 +77,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
                 background: "#1c1917",
                 color: "#fafaf9",
                 fontSize: "0.875rem",
+                // Toasts are 350px by default — cap them so a long message
+                // can never push past the edges of a phone screen.
+                maxWidth: "calc(100vw - 32px)",
               },
             }}
           />

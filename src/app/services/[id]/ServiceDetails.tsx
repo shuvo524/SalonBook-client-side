@@ -100,10 +100,10 @@ function ServiceDetailsContent() {
           <span className="inline-block rounded-full bg-rose-50 px-3 py-1 text-xs font-semibold text-rose-700">
             {service.category}
           </span>
-          <h1 className="mt-3 font-display text-3xl font-bold text-stone-900 sm:text-4xl">
+          <h1 className="mt-3 font-display text-3xl font-bold break-words text-stone-900 sm:text-4xl">
             {service.serviceName}
           </h1>
-          <p className="mt-4 text-sm leading-relaxed text-stone-600 sm:text-base">
+          <p className="mt-4 text-sm leading-relaxed break-words text-stone-600 sm:text-base">
             {service.description}
           </p>
 

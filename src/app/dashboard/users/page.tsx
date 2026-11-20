@@ -176,7 +176,7 @@ function ManageUsersContent() {
                     )}
                     <div className="min-w-0 flex-1">
                       <div className="flex flex-wrap items-center gap-2">
-                        <h3 className="font-display text-lg font-semibold text-stone-900">
+                        <h3 className="font-display text-lg font-semibold break-words text-stone-900">
                           {user.name}
                         </h3>
                         <span className="rounded-full bg-rose-50 px-2.5 py-0.5 text-xs font-semibold text-rose-700 capitalize">
