@@ -1,10 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 
-// NOTE: the address, opening hours, phone number and email below are
+// NOTE: the street address and opening hours below are still
 // PLACEHOLDERS — Shuvo must replace them with the salon's real details
-// before submission. The social links point at the platforms' homepages
-// until the salon's own pages are added.
+// before submission. The phone number and email are his real contact
+// details (added 2026-11-20). The social links point at the platforms'
+// homepages until the salon's own pages are added.
 
 const quickLinks = [
   { href: "/", label: "Home" },
@@ -74,18 +75,18 @@ export default function Footer() {
             <p>123 Beauty Avenue, Dhaka 1212, Bangladesh</p>
             <p>
               <a
-                href="tel:+8801700000000"
+                href="tel:+8801782019073"
                 className="transition-colors hover:text-rose-300"
               >
-                +880 1700-000000
+                +880 1782-019073
               </a>
             </p>
             <p>
               <a
-                href="mailto:hello@salonbook.example"
+                href="mailto:webdevelopmentlearner27@gmail.com"
                 className="break-all transition-colors hover:text-rose-300"
               >
-                hello@salonbook.example
+                webdevelopmentlearner27@gmail.com
               </a>
             </p>
             <p>Open every day, 9:00 AM – 8:00 PM</p>
