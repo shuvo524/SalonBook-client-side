@@ -12,7 +12,13 @@ export function Spinner({ label }: { label?: string }) {
 
 export function PageLoader({ label = "Loading…" }: { label?: string }) {
   return (
-    <div className="flex min-h-64 flex-col items-center justify-center gap-3 py-16">
+    // suppressHydrationWarning: a browser extension injects attributes
+    // (e.g. `bis_skin_checked`) into this div before React loads; see the
+    // note in app/layout.tsx.
+    <div
+      suppressHydrationWarning
+      className="flex min-h-64 flex-col items-center justify-center gap-3 py-16"
+    >
       <span className="h-10 w-10 animate-spin rounded-full border-4 border-rose-200 border-t-rose-600" />
       <p className="text-sm text-stone-500">{label}</p>
     </div>

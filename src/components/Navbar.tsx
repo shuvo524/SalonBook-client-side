@@ -74,7 +74,10 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop links */}
-        <div className="hidden items-center gap-1 md:flex">
+        {/* suppressHydrationWarning: a browser extension injects attributes
+            (e.g. `bis_skin_checked`) into these divs before React loads;
+            see the note in app/layout.tsx. */}
+        <div suppressHydrationWarning className="hidden items-center gap-1 md:flex">
           <NavLink href="/" active={pathname === "/"}>
             Home
           </NavLink>
@@ -92,9 +95,12 @@ export default function Navbar() {
         </div>
 
         {/* Desktop auth area */}
-        <div className="hidden items-center gap-3 md:flex">
+        <div suppressHydrationWarning className="hidden items-center gap-3 md:flex">
           {loading ? (
-            <div className="h-9 w-24 animate-pulse rounded-lg bg-stone-100" />
+            <div
+              suppressHydrationWarning
+              className="h-9 w-24 animate-pulse rounded-lg bg-stone-100"
+            />
           ) : user ? (
             <>
               <button

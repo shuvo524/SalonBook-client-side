@@ -20,11 +20,17 @@ const socialLinks = [
 ];
 
 export default function Footer() {
+  // suppressHydrationWarning on the divs below: a browser extension
+  // injects attributes (e.g. `bis_skin_checked`) into them before React
+  // loads; see the note in app/layout.tsx.
   return (
     <footer className="border-t border-stone-200 bg-stone-900 text-stone-300">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-8">
-        <div>
-          <div className="flex items-center gap-2">
+      <div
+        suppressHydrationWarning
+        className="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-8"
+      >
+        <div suppressHydrationWarning>
+          <div suppressHydrationWarning className="flex items-center gap-2">
             <Image
               src="/logo.png"
               alt="SalonBook logo"
@@ -60,7 +66,7 @@ export default function Footer() {
           </ul>
         </nav>
 
-        <div>
+        <div suppressHydrationWarning>
           <h3 className="text-sm font-semibold tracking-wide text-white uppercase">
             Contact &amp; Hours
           </h3>
@@ -86,7 +92,7 @@ export default function Footer() {
           </address>
         </div>
 
-        <div>
+        <div suppressHydrationWarning>
           <h3 className="text-sm font-semibold tracking-wide text-white uppercase">
             Follow Us
           </h3>
@@ -107,7 +113,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-stone-800">
+      <div suppressHydrationWarning className="border-t border-stone-800">
         <p className="mx-auto max-w-7xl px-4 py-5 text-center text-xs text-stone-500 sm:px-6 lg:px-8">
           © 2026 SalonBook. All rights reserved.
         </p>
