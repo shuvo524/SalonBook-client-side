@@ -2,11 +2,14 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
+import toast from "react-hot-toast";
 import { api, ApiError } from "@/lib/api";
 import type { Appointment, AppointmentStatus } from "@/lib/types";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import AppointmentCard from "@/components/AppointmentCard";
+import ConfirmDialog from "@/components/ConfirmDialog";
 import { PageLoader } from "@/components/Loader";
+import { formatDate } from "@/lib/dates";
 
 type StatusFilter = "all" | AppointmentStatus;
 
@@ -22,6 +25,8 @@ function MyAppointmentsContent() {
   const [filter, setFilter] = useState<StatusFilter>("all");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [cancelTarget, setCancelTarget] = useState<Appointment | null>(null);
+  const [cancelling, setCancelling] = useState(false);
 
   const load = useCallback(async (status: StatusFilter) => {
     setLoading(true);
@@ -46,6 +51,25 @@ function MyAppointmentsContent() {
   useEffect(() => {
     void load(filter);
   }, [filter, load]);
+
+  async function handleCancel() {
+    if (!cancelTarget) return;
+    setCancelling(true);
+    try {
+      await api.cancelMyAppointment(cancelTarget.id);
+      toast.success("Appointment cancelled.");
+      setCancelTarget(null);
+      await load(filter);
+    } catch (err) {
+      toast.error(
+        err instanceof ApiError
+          ? err.message
+          : "Could not cancel this appointment. Please try again.",
+      );
+    } finally {
+      setCancelling(false);
+    }
+  }
 
   return (
     <div>
@@ -112,11 +136,41 @@ function MyAppointmentsContent() {
               <AppointmentCard
                 key={appointment.id}
                 appointment={appointment}
+                actions={
+                  // Only pending requests can be cancelled — confirmed or
+                  // already-cancelled appointments show no Cancel button.
+                  appointment.status === "pending" ? (
+                    <button
+                      type="button"
+                      onClick={() => setCancelTarget(appointment)}
+                      className="rounded-lg border border-red-200 bg-white px-4 py-2 text-sm font-semibold text-red-700 transition-colors hover:bg-red-50"
+                    >
+                      Cancel Appointment
+                    </button>
+                  ) : undefined
+                }
               />
             ))}
           </div>
         )}
       </div>
+
+      <ConfirmDialog
+        open={cancelTarget !== null}
+        title="Cancel this appointment?"
+        message={
+          cancelTarget
+            ? `This cancels your ${cancelTarget.serviceId.serviceName} request for ${formatDate(cancelTarget.appointmentDate)} at ${cancelTarget.timeSlot}. This cannot be undone.`
+            : ""
+        }
+        confirmLabel="Yes, Cancel It"
+        tone="danger"
+        confirming={cancelling}
+        onConfirm={() => void handleCancel()}
+        onCancel={() => {
+          if (!cancelling) setCancelTarget(null);
+        }}
+      />
     </div>
   );
 }
