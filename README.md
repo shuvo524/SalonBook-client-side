@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SalonBook — Client
 
-## Getting Started
+SalonBook is a salon appointment booking platform (Programming Hero
+Assignment 9, Category 002). Customers browse salon services, request
+appointments online, and pay for confirmed appointments through Stripe.
+Admins manage services, appointments, customers, and payments.
 
-First, run the development server:
+This repository holds the **client** (Next.js frontend). The server lives
+in a separate repository.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Live Website
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Live site: _TBD — deployment is still in progress._
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Technology Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Next.js 16 (App Router) + TypeScript + Tailwind CSS v4
+- Better Auth (email/password + Google sign-in; JWT for API calls)
+- React Hot Toast for notifications
 
-## Learn More
+## How to Run Locally
 
-To learn more about Next.js, take a look at the following resources:
+Requirements: Node.js 20+, and the SalonBook server running on
+`http://localhost:5000`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Install dependencies:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   ```bash
+   npm install
+   ```
 
-## Deploy on Vercel
+2. Create `.env.local` (see `.env.example`):
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```bash
+   NEXT_PUBLIC_API_URL=http://localhost:5000
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+3. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+4. Open http://localhost:3000
+
+## Environment Variables
+
+| Variable | Description |
+| --- | --- |
+| `NEXT_PUBLIC_API_URL` | Base URL of the Express API server |
+
+No secrets belong in this repository. Google OAuth credentials, Stripe
+keys, the ImgBB key, and database credentials live only on the server.
+
+## Repositories
+
+- Client: https://github.com/shuvo524/SalonBook-client-side
+- Server: https://github.com/shuvo524/SalonBook-server-side
