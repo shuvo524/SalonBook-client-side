@@ -7,6 +7,7 @@ import { api, ApiError } from "@/lib/api";
 import type { Service } from "@/lib/types";
 import ServiceCard from "@/components/ServiceCard";
 import { ServiceGridSkeleton } from "@/components/Loader";
+import { useAuth } from "@/context/AuthContext";
 
 const HERO_IMAGE =
   "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1920&q=80";
@@ -30,6 +31,7 @@ const HOW_IT_WORKS = [
 ];
 
 export default function HomePage() {
+  const { user, loading: authLoading } = useAuth();
   const [services, setServices] = useState<Service[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
@@ -93,12 +95,18 @@ export default function HomePage() {
             >
               Explore Salon Services
             </Link>
-            <Link
-              href="/sign-up"
-              className="rounded-lg border border-white/40 bg-white/10 px-6 py-3 text-sm font-semibold text-white backdrop-blur transition-colors hover:bg-white/20"
-            >
-              Create an Account
-            </Link>
+            {/* Shown only to signed-out visitors: a signed-in user
+                already has an account. Hidden while the session is
+                still restoring, so it never flashes for signed-in
+                users (same pattern as the Navbar). */}
+            {!authLoading && !user && (
+              <Link
+                href="/sign-up"
+                className="rounded-lg border border-white/40 bg-white/10 px-6 py-3 text-sm font-semibold text-white backdrop-blur transition-colors hover:bg-white/20"
+              >
+                Create an Account
+              </Link>
+            )}
           </div>
         </div>
       </section>
