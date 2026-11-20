@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
@@ -59,9 +60,14 @@ export default function Navbar() {
     <header className="sticky top-0 z-40 border-b border-stone-200 bg-white/90 backdrop-blur">
       <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex shrink-0 items-center gap-2">
-          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-rose-600 font-display text-lg font-bold text-white">
-            S
-          </span>
+          <Image
+            src="/logo.png"
+            alt="SalonBook logo"
+            width={36}
+            height={36}
+            priority
+            className="h-9 w-9 rounded-xl object-cover"
+          />
           <span className="font-display text-xl font-bold tracking-tight text-stone-900">
             Salon<span className="text-rose-600">Book</span>
           </span>

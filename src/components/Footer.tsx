@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 // NOTE: the address, opening hours, phone number and email below are
@@ -23,9 +24,18 @@ export default function Footer() {
     <footer className="border-t border-stone-200 bg-stone-900 text-stone-300">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-8">
         <div>
-          <p className="font-display text-2xl font-bold text-white">
-            Salon<span className="text-rose-400">Book</span>
-          </p>
+          <div className="flex items-center gap-2">
+            <Image
+              src="/logo.png"
+              alt="SalonBook logo"
+              width={36}
+              height={36}
+              className="h-9 w-9 rounded-xl object-cover"
+            />
+            <p className="font-display text-2xl font-bold text-white">
+              Salon<span className="text-rose-400">Book</span>
+            </p>
+          </div>
           <p className="mt-3 text-sm leading-relaxed text-stone-400">
             Your favourite salon, one tap away. Browse services, book an
             appointment online, and pay securely — all in one place.
