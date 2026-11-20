@@ -9,7 +9,7 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import AppointmentCard from "@/components/AppointmentCard";
 import ConfirmDialog from "@/components/ConfirmDialog";
 import { PageLoader } from "@/components/Loader";
-import { formatDate } from "@/lib/dates";
+import { formatDate, formatPrice } from "@/lib/dates";
 
 type StatusFilter = "all" | AppointmentStatus;
 
@@ -27,6 +27,7 @@ function MyAppointmentsContent() {
   const [error, setError] = useState("");
   const [cancelTarget, setCancelTarget] = useState<Appointment | null>(null);
   const [cancelling, setCancelling] = useState(false);
+  const [payingId, setPayingId] = useState<string | null>(null);
 
   const load = useCallback(async (status: StatusFilter) => {
     setLoading(true);
@@ -68,6 +69,28 @@ function MyAppointmentsContent() {
       );
     } finally {
       setCancelling(false);
+    }
+  }
+
+  // Pay Now: the server creates a Stripe Checkout session and the browser
+  // is redirected to Stripe. No Stripe code runs on the client, and the
+  // payment status only changes when the server's webhook verifies it.
+  async function handlePayNow(appointment: Appointment) {
+    setPayingId(appointment.id);
+    try {
+      const { checkoutUrl } = await api.createCheckout(appointment.id);
+      window.location.href = checkoutUrl;
+    } catch (err) {
+      setPayingId(null);
+      if (err instanceof ApiError && err.status === 503) {
+        toast.error("Payments are not available right now. Please try later.");
+      } else {
+        toast.error(
+          err instanceof ApiError
+            ? err.message
+            : "Could not start checkout. Please try again.",
+        );
+      }
     }
   }
 
@@ -137,17 +160,32 @@ function MyAppointmentsContent() {
                 key={appointment.id}
                 appointment={appointment}
                 actions={
-                  // Only pending requests can be cancelled — confirmed or
-                  // already-cancelled appointments show no Cancel button.
-                  appointment.status === "pending" ? (
-                    <button
-                      type="button"
-                      onClick={() => setCancelTarget(appointment)}
-                      className="rounded-lg border border-red-200 bg-white px-4 py-2 text-sm font-semibold text-red-700 transition-colors hover:bg-red-50"
-                    >
-                      Cancel Appointment
-                    </button>
-                  ) : undefined
+                  <>
+                    {/* Only pending requests can be cancelled. */}
+                    {appointment.status === "pending" && (
+                      <button
+                        type="button"
+                        onClick={() => setCancelTarget(appointment)}
+                        className="rounded-lg border border-red-200 bg-white px-4 py-2 text-sm font-semibold text-red-700 transition-colors hover:bg-red-50"
+                      >
+                        Cancel Appointment
+                      </button>
+                    )}
+                    {/* Only confirmed + unpaid appointments can be paid for. */}
+                    {appointment.status === "confirmed" &&
+                      appointment.paymentStatus === "unpaid" && (
+                        <button
+                          type="button"
+                          onClick={() => void handlePayNow(appointment)}
+                          disabled={payingId === appointment.id}
+                          className="rounded-lg bg-rose-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-rose-700 disabled:opacity-60"
+                        >
+                          {payingId === appointment.id
+                            ? "Redirecting to Stripe…"
+                            : `Pay Now — ${formatPrice(appointment.servicePrice)}`}
+                        </button>
+                      )}
+                  </>
                 }
               />
             ))}
