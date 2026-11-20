@@ -8,6 +8,7 @@ import { api, ApiError } from "@/lib/api";
 import type { Service } from "@/lib/types";
 import { useAuth } from "@/context/AuthContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import BookingForm from "@/components/BookingForm";
 import { PageLoader } from "@/components/Loader";
 import { formatPrice } from "@/lib/dates";
 
@@ -134,7 +135,9 @@ function ServiceDetailsContent() {
         </div>
       </div>
 
-      {/* The booking form is added in the next step (Phase 3). */}
+      {user?.role === "customer" && (
+        <BookingForm serviceId={service.id} serviceName={service.serviceName} />
+      )}
     </div>
   );
 }
