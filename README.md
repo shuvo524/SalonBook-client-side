@@ -10,7 +10,9 @@ in a separate repository.
 
 ## Live Website
 
-Live site: _TBD — deployment is still in progress._
+Live site: https://salonbook-bd.vercel.app/
+
+API server: https://salonbook-server-mu.vercel.app/
 
 ## Features
 
