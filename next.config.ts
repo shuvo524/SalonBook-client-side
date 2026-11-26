@@ -21,6 +21,16 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  // Examiner feedback (Assignment 9, 2026-11-21): auth must use the Client
+  // URL, not the server URL. Every /api/* call from the browser goes to
+  // this origin and is rewritten to the Express server, so the server URL
+  // never appears in the browser during auth. Data calls in lib/api.ts
+  // still use NEXT_PUBLIC_API_URL directly (JWT bearer, no cookies).
+  async rewrites() {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+    if (!apiUrl) return [];
+    return [{ source: "/api/:path*", destination: `${apiUrl}/api/:path*` }];
+  },
 };
 
 export default nextConfig;

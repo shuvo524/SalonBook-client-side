@@ -79,12 +79,15 @@ async function request<T>(
  * Exchange the Better Auth session cookie for a JWT. Used after every
  * sign-in (email, Google) and when restoring a session after refresh.
  * The session cookie is required, so this sends `credentials: "include"`.
+ * Same-origin call: the session cookie lives on the client origin now
+ * (auth goes through the Next.js /api rewrite), so this must NOT call
+ * the server URL directly.
  */
 export async function exchangeToken(): Promise<{
   token: string;
   user: User;
 }> {
-  const res = await fetch(`${API_URL}/api/auth/token`, {
+  const res = await fetch(`/api/auth/token`, {
     method: "POST",
     credentials: "include",
   });
@@ -107,10 +110,12 @@ export async function exchangeToken(): Promise<{
   return { token: data.token, user: data.user };
 }
 
-/** End the Better Auth session on the server. Local cleanup happens in the caller. */
+/** End the Better Auth session on the server. Local cleanup happens in the caller.
+ * Same-origin call (see exchangeToken): the session cookie lives on the
+ * client origin, so sign-out must go through the /api rewrite too. */
 export async function signOutRequest(): Promise<void> {
   try {
-    await fetch(`${API_URL}/api/auth/sign-out`, {
+    await fetch(`/api/auth/sign-out`, {
       method: "POST",
       credentials: "include",
     });
